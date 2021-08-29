@@ -1,24 +1,24 @@
-import org.gradle.api.plugins.internal.JvmPluginsHelper
-
-apply plugin: 'com.android.library'
-apply plugin: 'maven-publish'
-
+plugins {
+    id 'com.android.library'
+    id 'maven-publish'
+}
 android {
+    compileSdk rootProject.compileSdkVersion
 
-    compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion rootProject.buildToolsVersion
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion rootProject.compileSdkVersion
-        versionCode 1
-        versionName PUBLISH_VERSION
+        minSdk 14
+        targetSdk rootProject.compileSdkVersion
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
-    }
-    lintOptions {
+
+    lint {
         abortOnError false
+    }
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
     }
 }
 
@@ -26,19 +26,6 @@ android {
 // It should really be set up so that the version are all in line, and set to be a SNAPSHOT.
 // The version listed here is a temp hack to allow me to keep working.
 afterEvaluate {
-    JvmPluginsHelper.configureDocumentationVariantWithArtifact(
-            "release" + JavaPlugin.SOURCES_ELEMENTS_CONFIGURATION_NAME.capitalize(),
-            null,
-            DocsType.SOURCES,
-            [],
-            "releaseSourcesJar",
-            android.sourceSets.main.java.srcDirs,
-            components.release,
-            configurations,
-            tasks,
-            objects
-    )
-
     publishing {
         publications {
             maven(MavenPublication) {

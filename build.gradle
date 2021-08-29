@@ -1,23 +1,5 @@
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.4'
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-
 ext {
     compileSdkVersion = 28
-    buildToolsVersion = '28.0.3'
     androidXLibraryVersion = '1.0.0'
 
     PUBLISH_GROUP_ID = 'com.theartofdev.edmodo'

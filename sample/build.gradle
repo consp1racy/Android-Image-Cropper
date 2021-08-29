@@ -1,16 +1,19 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+}
 
 android {
-    compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion rootProject.buildToolsVersion
+    compileSdk rootProject.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion rootProject.compileSdkVersion
+        minSdk 14
+        targetSdk rootProject.compileSdkVersion
+
         versionCode 1
         versionName '1.0'
     }
-    lintOptions {
+
+    lint {
         abortOnError false
     }
 }
