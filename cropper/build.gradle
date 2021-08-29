@@ -1,6 +1,6 @@
+import org.gradle.api.plugins.internal.JvmPluginsHelper
+
 apply plugin: 'com.android.library'
-// https://docs.gradle.org/current/userguide/publishing_maven.html
-// http://www.flexlabs.org/2013/06/using-local-aar-android-library-packages-in-gradle-builds
 apply plugin: 'maven-publish'
 
 android {
@@ -26,6 +26,19 @@ android {
 // It should really be set up so that the version are all in line, and set to be a SNAPSHOT.
 // The version listed here is a temp hack to allow me to keep working.
 afterEvaluate {
+    JvmPluginsHelper.configureDocumentationVariantWithArtifact(
+            "release" + JavaPlugin.SOURCES_ELEMENTS_CONFIGURATION_NAME.capitalize(),
+            null,
+            DocsType.SOURCES,
+            [],
+            "releaseSourcesJar",
+            android.sourceSets.main.java.srcDirs,
+            components.release,
+            configurations,
+            tasks,
+            objects
+    )
+
     publishing {
         publications {
             maven(MavenPublication) {
@@ -43,4 +56,3 @@ dependencies {
     api "androidx.appcompat:appcompat:$androidXLibraryVersion"
     implementation "androidx.exifinterface:exifinterface:$androidXLibraryVersion"
 }
-
